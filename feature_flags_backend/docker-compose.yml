@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    command: ["/bin/sh", "-c", "python manage.py migrate && gunicorn feature_flags_backend.wsgi:application --bind 0.0.0.0:8000"]
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+  test:
+    build: .
+    command: ["pytest"]
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=feature_flags_backend.settings
+volumes:
+  postgres_data: 
