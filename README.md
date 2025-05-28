@@ -28,8 +28,8 @@ A **feature flag** (or feature toggle) is a software development technique that 
 ### Setup
 1. Clone the repository:
    ```bash
-   git clone <your-repo-url>
-   cd <repo-folder>
+   git clone git@github.com:motiefard/task_feature_flag_backend.git
+   cd git@github.com:motiefard/task_feature_flag_backend.git
    ```
 2. Create a `.env` file in the project root (see `.env.example` or below):
    ```env
